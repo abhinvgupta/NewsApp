@@ -1,0 +1,23 @@
+{
+  "name": "newsapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "memcached": "^2.2.2",
+    "mongodb": "^3.6.2",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4"
+  }
+}
