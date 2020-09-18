@@ -1,9 +1,12 @@
+/* eslint-disable implicit-arrow-linebreak */
+
 const NodeCache = require('node-cache');
 
 const HackerNewsApi = require('../controllers/hackerNewsApi');
 
 const { insertStory, getStories } = require('../db');
 const { cacheTTL } = require('../constants');
+const { compareCommentsSize } = require('./helpers');
 
 const myCache = new NodeCache({ checkperiod: 60 });
 
@@ -15,13 +18,11 @@ class StoryService {
   async getTopStories() {
     // check cache
     const existingStories = myCache.keys();
-    console.log(existingStories, 'existing');
 
     // return cached stories if cache exists
     if (existingStories && existingStories.length === 10) {
       let cachedStories = myCache.mget(existingStories);
       cachedStories = Object.keys(cachedStories).map((id) => cachedStories[id]);
-      console.log(cachedStories, 'cachedddd');
       return cachedStories;
     }
     if (existingStories.length) {
@@ -63,7 +64,29 @@ class StoryService {
   }
 
   async getComments(storyId) {
+    const story = await this.HackerNewsApiController.getNewsItem(storyId);
+    // console.log(story, 3);
+    const commentIds = story.kids.slice(0, 10);
+    const commentsPromise = commentIds.map((commentId) =>
+    // get all 10 comments
+      this.HackerNewsApiController.getNewsItem(commentId).then((comment) =>
+        // get comment user
+        this.HackerNewsApiController.getUserInfo(comment.by).then((user) => {
+          // calculate user age
+          const currentUnixTime = (Date.now() / 1000);
+          const userAge = Math.floor((currentUnixTime - user.created) / (60 * 60 * 24 * 365));
+          return { ...comment, userAge };
+        })));
+    // get user ids for each comment
+    let comments = await Promise.all(commentsPromise);
+    // sort comments acc. to comment thread size
+    comments.sort(compareCommentsSize);
 
+    comments = comments.map((c) => {
+      const { by, userAge, text } = c;
+      return { by, userAge, text };
+    });
+    return comments;
   }
 }
 

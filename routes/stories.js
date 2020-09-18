@@ -8,17 +8,30 @@ const StoryService = require('../services/stories');
 router.get('/top-stories', async (req, res, next) => {
   const storyServiceInstance = new StoryService();
 
-  return storyServiceInstance.getTopStories().then((stories) => res.json({ stories })).catch(next);
+  return storyServiceInstance.getTopStories().then(
+    (stories) => res.json({ stories }),
+  ).catch(next);
 });
 
 router.get('/past-stories', async (req, res, next) => {
   const storyServiceInstance = new StoryService();
 
-  return storyServiceInstance.getPastStories().then((stories) => res.json({ stories })).catch(next);
+  return storyServiceInstance.getPastStories().then(
+    (stories) => res.json({ stories }),
+  ).catch(next);
 });
 
 router.get('/comments', async (req, res, next) => {
-  res.send('respond with a resource');
+  const params = req.query;
+  const { storyId } = params;
+  if (!storyId) {
+    return next(new Error('storyId required in params'));
+  }
+  const storyServiceInstance = new StoryService();
+
+  return storyServiceInstance.getComments(storyId).then(
+    (comments) => res.json({ comments }),
+  ).catch(next);
 });
 
 module.exports = router;
