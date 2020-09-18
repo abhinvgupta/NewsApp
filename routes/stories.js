@@ -25,7 +25,7 @@ router.get('/comments', async (req, res, next) => {
   const params = req.query;
   const { storyId } = params;
   if (!storyId) {
-    return next(new Error('storyId required in params'));
+    return next(new Error('StoryId required in params'));
   }
   const storyServiceInstance = new StoryService();
 

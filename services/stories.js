@@ -83,8 +83,12 @@ class StoryService {
     comments.sort(compareCommentsSize);
 
     comments = comments.map((c) => {
-      const { by, userAge, text } = c;
-      return { by, userAge, text };
+      const {
+        id, by, userAge, text,
+      } = c;
+      return {
+        id, by, userAge, text,
+      };
     });
     return comments;
   }

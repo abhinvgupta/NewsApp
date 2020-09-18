@@ -1,11 +1,13 @@
 const mongo = require('mongodb').MongoClient;
 
 const mongoUrl = process.env.MONGO_URI;
-
+const { NODE_ENV } = process.env;
 const connectionUrl = mongoUrl || 'mongodb://localhost:27017/';
 
-const dbName = 'newsdb';
-
+let dbName = 'newsdb';
+if (NODE_ENV === 'test') {
+  dbName = 'newsdb-test';
+}
 let db;
 let storiesCollection;
 
