@@ -2,10 +2,10 @@
 
 # Run With Docker
 
-docker-compose build
-docker-compose up
+docker-compose build<br/>
+docker-compose up<br/>
 
 # Run Without Docker
 
-npm i
-npm start
+npm i<br/>
+npm start<br/>
