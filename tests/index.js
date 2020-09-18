@@ -33,6 +33,13 @@ describe('Test APIs', () => {
       done();
     });
   });
+  it('Should return Item not found error if incorrect story id given', (done) => {
+    chai.request(app).get('/comments').query({ storyId: '24488224aaaaa' }).end((err, res) => {
+      expect(res.status).to.eq(400);
+      expect(res.body.error).to.eq('News Item not found');
+      done();
+    });
+  });
   it('Should return 400 status if story id not passed in get comments api', (done) => {
     chai.request(app).get('/comments').end((err, res) => {
       expect(res.status).to.eq(400);

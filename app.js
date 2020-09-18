@@ -1,5 +1,5 @@
 const express = require('express');
-const taxiRouter = require('./routes/stories.js');
+const router = require('./routes/stories.js');
 const { init } = require('./db');
 
 const app = express();
@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/', taxiRouter);
+app.use('/', router);
 
 /* eslint-disable no-unused-vars */
 // error handler

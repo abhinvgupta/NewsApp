@@ -30,9 +30,9 @@ class StoryService {
       myCache.flushAll();
     }
 
-    // hit hacker news api
+    // hit hacker news api to get top stories ids
     let topStories = await this.HackerNewsApiController.getTopStories();
-    // get top 10 stories
+    // get top 10 story ids
     topStories = topStories.slice(0, 10);
 
     const promiseArray = topStories.map(
@@ -65,7 +65,6 @@ class StoryService {
 
   async getComments(storyId) {
     const story = await this.HackerNewsApiController.getNewsItem(storyId);
-    // console.log(story, 3);
     const commentIds = story.kids.slice(0, 10);
     const commentsPromise = commentIds.map((commentId) =>
     // get all 10 comments

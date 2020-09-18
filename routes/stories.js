@@ -4,7 +4,6 @@ const router = express.Router();
 
 const StoryService = require('../services/stories');
 
-/* GET users listing. */
 router.get('/top-stories', async (req, res, next) => {
   const storyServiceInstance = new StoryService();
 
