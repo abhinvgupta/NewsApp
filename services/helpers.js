@@ -5,4 +5,9 @@ const compareCommentsSize = (a, b) => {
   return 1;
 };
 
-module.exports = { compareCommentsSize };
+const getUserAge = (createdAt) => {
+  const currentUnixTime = (Date.now() / 1000);
+  const userAge = Math.floor((currentUnixTime - createdAt) / (60 * 60 * 24 * 365));
+  return userAge;
+};
+module.exports = { compareCommentsSize, getUserAge };

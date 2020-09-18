@@ -6,7 +6,7 @@ const HackerNewsApi = require('../controllers/hackerNewsApi');
 
 const { insertStory, getStories } = require('../db');
 const { cacheTTL } = require('../constants');
-const { compareCommentsSize } = require('./helpers');
+const { compareCommentsSize, getUserAge } = require('./helpers');
 
 const myCache = new NodeCache({ checkperiod: 60 });
 
@@ -72,8 +72,8 @@ class StoryService {
         // get comment user
         this.HackerNewsApiController.getUserInfo(comment.by).then((user) => {
           // calculate user age
-          const currentUnixTime = (Date.now() / 1000);
-          const userAge = Math.floor((currentUnixTime - user.created) / (60 * 60 * 24 * 365));
+          const userAge = getUserAge(user.created);
+
           return { ...comment, userAge };
         })));
     // get user ids for each comment
