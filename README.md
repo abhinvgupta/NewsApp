@@ -9,3 +9,7 @@ docker-compose up<br/>
 
 npm i<br/>
 npm start<br/>
+
+# Run Tests
+
+npm run test
